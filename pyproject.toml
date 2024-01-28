@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=40.6.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "devtools"
+version = "0.0.1"
+description = "A collection of useful python tools to simplify common coding tasks as well as wlan auditing tasks."
+authors = [{name = "Colin Weaver", email = "colin@itdojo.com"}]
+license = {file = "LICENSE"}
+readme = "README.md"
+requires-python = ">=3.10"
+
+[project.urls]
+Home = "https://github.com/itdojo/devtools"
+
