@@ -8,6 +8,7 @@
 * [**`rootCheck`**](#rootcheck)
 * [**`shellCommand`**](#shellcommand)
 * [**`wifiSelector`**](#wifiselector)
+* [**`networkCommands**`](#networkcommands)
 
 ## Purpose
 This python package is a comprised of a growing number of modules that are aimed as simplifying things that I commonly do when scripting using python.
@@ -23,6 +24,7 @@ The modules include:
 * [**`rootCheck`**](#rootcheck) - Checks to see if the script is running as root.  If not root, it will exit the script you are running (so don't use this if you script does not need to be root).
 * [**`shellCommand`**](#shellcommand) - Provide a command as a string (Ex. "`ip link set {iface} down`") to this module and it execute the command and return the result (STDOUT and STDERR).
 * [**`wifiSelector`**](#wifiselector) - This tool only works on Linux and retrieves all wlan interfaces on the system.  It also has a function to create a list of the available interfaces to the user.  Optionally, it will also show the interface MAC address and OUI vendor name.
+* [**`networkCommands**`](#networkcommands) - A list of funtions that return shell scripting command strings.  The idea is to simplify the syntax and readability of your scripts and eliminte the need to constantly add string variables to your scripts for commands you need to run.
 
 ***
 
@@ -39,8 +41,9 @@ Available Line Types:
 
 #### How to use `drawline`
 
-Valid `linetype`: 1 through 5.
+* Valid `linetype`: 1 through 5.
 
+Example syntax:
 ```python
 import devtools.drawLine as drawLine
 
@@ -52,7 +55,7 @@ drawLine.draw_line(linetype=1)
 ***
 
 ### `getOS`
-Returns the OS the script is running on (Windows, MacOS, Linux).  I use it to determine if my script can continue (Example: if my script will only run on Linux).  getOS only returns the OS, it's up to you to do decide what to do with that info in your script.
+Returns the OS the script is running on (Windows, MacOS, Linux).  I use it to determine if my script can continue (Example: if my script will only run on Linux).  `getOS` only returns the generic OS name ("Windows", "Linux", "Darwin" (MacOS), etc.), it's up to you to do decide what to do with that info in your script.
 
 #### How to use `getOS`
 
@@ -67,7 +70,9 @@ getOS.os_is()
 ***
 
 ### `macFormatter`
-Returns a MAC address in the format you desire, regardless of the input format.  If you give it aa-bb-cc-dd-ee-ff it can return aa:bb:cc:dd:ee:ff or aabbccddeeff or aa.bb.cc.dd.ee.ff, etc.  It can also toggle case if
+Returns a MAC address in the format you desire, regardless of the input format you feed it.  If you give it aa-bb-cc-dd-ee-ff it can return aa:bb:cc:dd:ee:ff or aabbccddeeff or aa.bb.cc.dd.ee.ff, etc.  It can also toggle case if desired.
+
+> Note: `macFormatter` does not currently validate the sanity of your input (specifically, length and non-hex characters).  I plan add that functionality later.  So, for now, you'll need to be careful if you are manually entering MAC addresses.
 
 #### How to use `macFormatter`
 
@@ -80,14 +85,17 @@ macFormatter.format_mac_address(mac, case, seperator)
 | Operator | Valid Options | 
 |:--|:--|
 |**`mac`** *(Required)* | MAC address in any format ("aa:bb:cc:dd:ee:ff", "aabbccddeeff", "aa-bb-cc-dd-ee-ff", "aa.bb.cc.dd.ee.ff")
-| **`case`** *(Optional)* | `"upper"` and `"lower"` (default)
-| **`seperator`** *(Optional)* | `":"` (default), `"-"`, `"."`, `""` and `None` are valid options.
+| **`case`** *(Optional)* | The case retured to you. `"upper"` and `"lower"` (default)
+| **`seperator`** *(Optional)* | The seperator returned to you. `":"` (default), `"-"`, `"."`, `""` and `None` are valid options.
 
 Example:
 ```python
 import devtools.macFormatter as macFormatter
 
 macFormatter.format_mac_address("aa-bb-cc-11-22-33", case="upper", seperator=":")
+
+# Returns
+'AA:BB:CC:11:22:33'
 ```
 
 <img src="https://dojolabs.s3.amazonaws.com/devtools/macformatter.png" width=100%>
@@ -95,11 +103,13 @@ macFormatter.format_mac_address("aa-bb-cc-11-22-33", case="upper", seperator=":"
 ***
 
 ### `ouiLookup`
-Given a MAC address it will use the IEEE oui.txt file to look up the name of the vendor.  If oui.txt is not available in the local directory, the module will download it from the Internet.  This may cause a delay the first time it is used.  Subsequent lookups are fast.  If desired, you can [pre-download the oui.txt file from the IEEE](http://standards-oui.ieee.org/oui/oui.txt) using `wget http://standards-oui.ieee.org/oui/oui.txt`.
+Given a MAC address, it will use the IEEE oui.txt file to look up the name of the vendor.  If oui.txt is not available in the local directory, the module will download it from the Internet.  This may cause a brief delay the first time it is used (oui.txt is just under 6MB).  Subsequent lookups are fast because oui.txt is stored locally.  If desired, you can [pre-download the oui.txt file from the IEEE](http://standards-oui.ieee.org/oui/oui.txt) using `wget http://standards-oui.ieee.org/oui/oui.txt`.
+
+> Note: The IEEE regularly updates oui.txt.  You should consider deleting your locally cached copy every couple of months to force your scripts to download a new copy.
 
 #### How to use `ouiLookup`
 
-The IEEE oui.txt file list OUIs in the format "AA-BB-12" and "AABB12".  I wrote this to look up the "AABB12" format.  Regardless of of you input the MAC address it will be formatted correctly by the module (see examples below).
+The IEEE oui.txt file list OUIs in the format "AA-BB-12" and "AABB12".  I wrote this function to look up the "AABB12" format.  Regardless of your input the MAC address will be formatted correctly (for the lookup to use it) by the module.  You do not need to worry about formtting your input to the function.  See examples below.
 
 Example:
 ```python
@@ -138,6 +148,12 @@ Running the script as root user:
 ***
 
 ### `shellCommand`
+
+***********************
+==***This needs to be rewritten.  What I have done is A) not detailed enough and B) probably too complex for the commands I typically run.  I need to change this to use subprocess.run() and check the returncode rather than the length of stderr and stdout.  It is possible that certain scripts/commands might generate outoput to both stderr and stdout.  If that happend with what I have here it will produce a false positive.  Live and learn...***==
+
+*********************************
+
 When you provide a command as a string (Ex. "`ip link set {iface} down`") to this module it executes the command and return the result (both STDOUT and STDERR).
 
 #### How to use `shellCommand`
@@ -193,17 +209,22 @@ Here is a failure example (insufficient privilege):
 |:--|:--|:--|
 |`showmac` *(Optional)* | Boolean (`True`, or `False`) | If `True` (default), the interfaces will be displayed along with the MAC address and the OUI vendor name.  If `False`, only the interface is displayed.
 | `linetype` *(Optional)* | `1` through `5` | Determines the type of line used as a sepearator.  The default is a horizontal line.  See [drawLine](#drawline) for details on the line options.
+
+**Valid User Input**
+| Input | Valid Options | Description |
+|:--|:--|:--|
+|`1` through `n` | An integer | `n` is the highest total number of wlan interfaces you have.  Depending on how many wlan interfaces you have.
 | (**q**)uit and (**r**)efresh | `q` and `r` | `q` quits without making a selection and returns `None`.  `r` refreshes the list (for when you run your script before plugging in your USB wlan adapter).
-| Bad input | Anything but `1` through `5`, `q` or `r` | User is only permitted three (3) erroneous inputs before the function gives up and returns `None`
+| Bad input | Anything but `1` through `n`, `q` or `r` | User is only permitted three (3) erroneous inputs before the function gives up and returns `None`
 
 
-The module retrieves a list of wlan interfaces on the system.  It only works on Linux systems that have a `/sys/class/net` directory.  It also has a function to create and display list of the available interfaces to the user, prompting the user to choose an interface by entering the interface number (1, 2, 3, etc.).  Note that interface **wlan2** may be listed as item #3 on the list.  
+`interface_selector()` retrieves a list of wlan interfaces on the system.  It only works on Linux systems that have a `/sys/class/net` directory.  It also has a function to create and display list of the available interfaces to the user, prompting the user to choose an interface by entering the interface number (1, 2, 3, etc.).  
 
-As an example: To choose **wlan2** from the list of presented interfaces, you would enter the number on the list (3), not the number of the interface (2).  
+As an example: Interface **wlan2** may be listed as item #3 on the list.  To choose **wlan2** from the list of presented interfaces, you would enter the number on the list (3), not the number of the interface (2).  
 
 Optionally, this module will also show the interface MAC address and OUI vendor name.
 
-#### How to use `wifiSelector`
+#### How to use `wifiSelector.get_wifi_interfaces()`
 
 Syntax for `get_wifi_interfaces()`"
 ```python
@@ -217,6 +238,8 @@ interfaces = wifiSelector.get_wifi_interfaces()
 <img src="https://dojolabs.s3.amazonaws.com/devtools/wifiselector-getinterfaces.png" width=100%>
 
 ***
+
+#### How to user `wifiSelector.interface_selector()`
 
 Syntax for `interface_selector()`:
 ```python
@@ -246,3 +269,6 @@ print(sniffer_iface)
 <img src="https://dojolabs.s3.amazonaws.com/devtools/wifiselector-no-mac-oui.png" width=100%>
 
 ***
+
+## networkCommands
+* Coming soon...

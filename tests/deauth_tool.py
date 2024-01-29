@@ -42,14 +42,14 @@ def main():
         fatal_error(error_msg)
 
     # Get list of wireless interfaces
-    wifi_interfaces = wifiSelector.get_wifi_interfaces()
-    if wifi_interfaces is None:
-        error_msg = f"No wireless interfaces found.\nExiting."
-        fatal_error(error_msg)
+    #wifi_interfaces = wifiSelector.get_wifi_interfaces()
+    #if wifi_interfaces is None:
+    #    error_msg = f"No wireless interfaces found.\nExiting."
+    #    fatal_error(error_msg)
     
     # Present the user with a list of interfaces to choose from
     # linetype = 1 to 5
-    sniffer_iface = wifiSelector.interface_selector(wifi_interfaces, showmac=True, linetype=1)
+    sniffer_iface = wifiSelector.interface_selector(showmac=True, linetype=1)
     if sniffer_iface is None:
         error_msg = "No interface selected.\nExiting."
         fatal_error(error_msg)

@@ -68,3 +68,19 @@ def run_shell_cmd(cmd):
     # print(f"stdout: {stdout}")
     # print(f"stderr: {stderr}")
     return [stdout.decode(), stderr.decode()]
+    # if len(stderr) > 0:
+    #    return [False, stderr.decode()]
+    # else:
+    #    return [True, stdout.decode()]
+
+    # Alternative method using subprocess.run()
+    # This method is simpler, but it doesn't allow capturing
+    # the output and error separately.
+    #result = subprocess.run(cmd.split(), capture_output=True, text=True)
+    #if result.returncode != 0:
+    #    print(f"Error executing command: {cmd}")
+    #    print(f"Error message: {result.stderr}")
+    #    return None
+    #else:
+    #    return [result.stdout, result.stderr]
+    
