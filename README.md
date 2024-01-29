@@ -198,11 +198,11 @@ Here is a failure example (insufficient privilege):
 ### `wifiSelector`
 
 `wifiSelector` has two functions:
-* **`get_wifi_interfaces()`** - Returns all available wlan interfaces as a dictionary object with the key:value pairs in the form of ***'interface':'mac_address'***.  
+* **`get_wlan_interfaces()`** - Returns all available wlan interfaces as a dictionary object with the key:value pairs in the form of ***'interface':'mac_address'***.  
   * Example: ***{'wlx00c0ca73bd44': '00:c0:ca:73:bd:44', 'wlx00c0ca448873': '00:c0:ca:44:88:73', 'wlp3s0': 'a8:93:4a:ac:60:44'}***
-  * If your script just needs to the the wlan interfaces and/or their MAC addresses, use `get_wifi_interfaces()`.
+  * If your script just needs to the the wlan interfaces and/or their MAC addresses, use `get_wlan_interfaces()`.
 * **`interface_selector(showmac=True, linetype=1)`** - Generates a numbered list of wlan interfaces for the user to select from.
-  * If your script needs to interact with the user to have them select a wlan interface for whatever you are doing, use `interface_selector()`.  This function calls `get_wifi_interfaces()` so you do not need to do them both in your script.
+  * If your script needs to interact with the user to have them select a wlan interface for whatever you are doing, use `interface_selector()`.  This function calls `get_wlan_interfaces()` so you do not need to do them both in your script.
 
 `interface_selector()` **Function parameters**
 | Parameter | Valid Options | Description |
@@ -224,16 +224,16 @@ As an example: Interface **wlan2** may be listed as item #3 on the list.  To cho
 
 Optionally, this module will also show the interface MAC address and OUI vendor name.
 
-#### How to use `wifiSelector.get_wifi_interfaces()`
+#### How to use `wifiSelector.get_wlan_interfaces()`
 
-Syntax for `get_wifi_interfaces()`"
+Syntax for `get_wlan_interfaces()`"
 ```python
 import devtools.wifiSelector as wifiSelector
 
-interfaces = wifiSelector.get_wifi_interfaces()
+interfaces = wifiSelector.get_wlan_interfaces()
 ```
 
-`get_wifi_interfaces()` Example:
+`get_wlan_interfaces()` Example:
 
 <img src="https://dojolabs.s3.amazonaws.com/devtools/wifiselector-getinterfaces.png" width=100%>
 

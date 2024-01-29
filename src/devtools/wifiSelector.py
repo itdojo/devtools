@@ -10,7 +10,7 @@ OUI (Organizationally Unique Identifier) of MAC addresses, and drawing
 lines for aesthetic terminal output.
 
 Functions:
-    get_wifi_interfaces():
+    get_wlan_interfaces():
         Scans and retrieves available WLAN interfaces and their 
         respective MAC addresses.
 
@@ -32,7 +32,7 @@ from devtools import ouiLookup
 from devtools import drawLine
 
 
-def get_wifi_interfaces():
+def get_wlan_interfaces():
     """
     Scans the system to identify available wireless network interfaces 
     along with their MAC addresses.
@@ -97,7 +97,7 @@ def interface_selector(showmac=True, linetype=1):
     - This function relies on 'devtools.drawLine' for drawing lines 
     and 'devtools.ouiLookup' for OUI lookups.
     """
-    wlan_interfaces = get_wifi_interfaces()
+    wlan_interfaces = get_wlan_interfaces()
     drawLine.draw_line(linetype)
     print(" WLAN Interface Selector")
     drawLine.draw_line(linetype)
@@ -115,7 +115,7 @@ def interface_selector(showmac=True, linetype=1):
     while attempt_count < max_attempts:
         choice = input("#️⃣  Enter WLAN interface by number ('q' to quit, 'r' to refresh): ").strip()
         if choice.lower() == 'r':
-            wlan_interfaces = get_wifi_interfaces()
+            wlan_interfaces = get_wlan_interfaces()
             refresh = interface_selector(wlan_interfaces, showmac)
             if refresh is None:
                 return None
