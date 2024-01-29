@@ -65,6 +65,6 @@ def run_shell_cmd(cmd):
         stdout=subprocess.PIPE, 
         stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
-    print(f"stdout: {stdout}")
-    print(f"stderr: {stderr}")
-    return [stdout, stderr]
+    # print(f"stdout: {stdout}")
+    # print(f"stderr: {stderr}")
+    return [stdout.decode(), stderr.decode()]

@@ -67,7 +67,7 @@ def get_wifi_interfaces():
     return wlan_interfaces
 
 
-def interface_selector(wlan_interfaces, showmac=True, linetype=1):
+def interface_selector(showmac=True, linetype=1):
     """
     Provides an interactive interface for selecting a wireless network 
     interface from a given list.
@@ -97,7 +97,7 @@ def interface_selector(wlan_interfaces, showmac=True, linetype=1):
     - This function relies on 'devtools.drawLine' for drawing lines 
     and 'devtools.ouiLookup' for OUI lookups.
     """
-
+    wlan_interfaces = get_wifi_interfaces()
     drawLine.draw_line(linetype)
     print(" WLAN Interface Selector")
     drawLine.draw_line(linetype)

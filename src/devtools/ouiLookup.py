@@ -94,7 +94,7 @@ def oui_lookup(mac_address, case="upper", seperator=""):
         filedata = f.readlines()
         for line in filedata:
             if node_oui in line:
-                vendor = line.replace("\t", "").replace("(base 16)", "").replace("\n", "")[8:]
+                vendor = line.replace("\t", "").replace("(base 16)", "").replace("\n", "")[8:].strip()
                 return vendor
         return "Vendor Unknown"
 
