@@ -83,4 +83,10 @@ def run_shell_cmd(cmd):
     #    return None
     #else:
     #    return [result.stdout, result.stderr]
+
+    # I wonder if subprocess.check_call() would be a better option
+    # than subprocess.run() or subprocess.Popen()?  Perhaps in certain
+    # situations, but it doesn't allow capturing the output and error.
+    # But for running a command like dhclient, it might be a better
+    # option.  It's worth looking into.
     
