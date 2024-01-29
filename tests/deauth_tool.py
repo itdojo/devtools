@@ -4,12 +4,13 @@
 import sys
 
 # devgru modules
-import devgru_tools.wifiSelector as wifiSelector
-import devgru_tools.rootCheck as rootCheck
-import devgru_tools.getOS as getOS
-import devgru_tools.ouiLookup as ouiLookup
-import devgru_tools.macFormatter as macFormatter
-import devgru_tools.shellCommand as shellCommand
+import devtools.wifiSelector as wifiSelector
+import devtools.rootCheck as rootCheck
+import devtools.getOS as getOS
+import devtools.ouiLookup as ouiLookup
+import devtools.drawLine as drawLine
+import devtools.macFormatter as macFormatter
+import devtools.shellCommand as shellCommand
 
 
 def fatal_error(error_msg, code=1):
@@ -53,6 +54,9 @@ def main():
         error_msg = "No interface selected.\nExiting."
         fatal_error(error_msg)
 
+
+# Temp entry to allow running from the src directory
+sys.path.append('src')
 
 if __name__ == "__main__":
     main()
