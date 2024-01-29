@@ -8,7 +8,7 @@
 * [**`rootCheck`**](#rootcheck)
 * [**`shellCommand`**](#shellcommand)
 * [**`wifiSelector`**](#wifiselector)
-* [**`networkCommands**`](#networkcommands)
+* [**`networkCommands`**](#networkcommands)
 
 ## Purpose
 This python package is a comprised of a growing number of modules that are aimed as simplifying things that I commonly do when scripting using python.
