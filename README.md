@@ -30,7 +30,7 @@ The modules include:
 
 ## Module Details and Usage
 
-### `drawline`
+### **drawline**
 Draws a line separator across the screen matching the width of your terminal. There are several line separator styles.
 Available Line Types:
 1. Solid line (─) (default)
