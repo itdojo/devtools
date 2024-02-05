@@ -200,7 +200,7 @@ Here is a failure example (insufficient privilege):
 `wifiSelector` has two functions:
 * **`get_wlan_interfaces()`** - Returns all available wlan interfaces as a dictionary object with the key:value pairs in the form of ***'interface':'mac_address'***.  
   * Example: ***{'wlx00c0ca73bd44': '00:c0:ca:73:bd:44', 'wlx00c0ca448873': '00:c0:ca:44:88:73', 'wlp3s0': 'a8:93:4a:ac:60:44'}***
-  * If your script just needs to the the wlan interfaces and/or their MAC addresses, use `get_wlan_interfaces()`.
+  * If your script just needs to get the wlan interfaces and/or their MAC addresses, use `get_wlan_interfaces()`.
 * **`interface_selector(showmac=True, linetype=1)`** - Generates a numbered list of wlan interfaces for the user to select from.
   * If your script needs to interact with the user to have them select a wlan interface for whatever you are doing, use `interface_selector()`.  This function calls `get_wlan_interfaces()` so you do not need to do them both in your script.
 
